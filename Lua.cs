@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 
 namespace LuaJITSharp
 {
@@ -459,6 +458,11 @@ namespace LuaJITSharp
         public static void SetGlobal(LuaState L, string name)
         {
             LuaNative.lua_setglobal(L, name);
+        }
+
+        public static void GetGlobal(LuaState L, string name)
+        {
+            LuaNative.lua_getglobal(L, name);
         }
 
         public static int LoadFileEx(LuaState L, string filename, string mode)
