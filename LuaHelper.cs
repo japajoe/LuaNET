@@ -4,6 +4,11 @@ namespace LuaJITSharp
 {
     public static class LuaHelper
     {
+        public static int GetArgumentCount(LuaState L)
+        {
+            return Lua.GetTop(L);
+        }
+
         public static bool CheckTypes(LuaState L, params LuaType[] types)
         {
             int count = 0;

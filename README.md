@@ -13,23 +13,20 @@ namespace LuaJITExample
     {
         static void Main(string[] args)
         {
-            string filepath = "test.lua";
-
-            if(!File.Exists(filepath))
-            {
-                Console.WriteLine("File doesn't exist");
-                return;
-            }
+            string code = "print(\"Hello world\")";
 
             LuaState state = Lua.NewState();            
 
             if (state.IsValid)
             {
                 Lua.OpenLibs(state);
-                Lua.DoFile(state, filepath);
+                Lua.DoString(state, code);
                 Lua.Close(state);
             }
         }
     }
 }
 ```
+
+# More Examples
+See Examples folder.
