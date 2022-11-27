@@ -12,7 +12,7 @@ namespace LuaJITExample
         {
             addNumbers = AddNumbers;
 
-            string filepath = "addnumbers.lua";
+            string filepath = "CallingCFunctionFromLua.lua";
 
             if(!File.Exists(filepath))
             {
