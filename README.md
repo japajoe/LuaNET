@@ -29,4 +29,4 @@ namespace LuaJITExample
 ```
 
 # More Examples
-See [Examples](https://github.com/japajoe/LuaJITSharp/tree/main/Examples "Examples").
+See [Examples](https://github.com/japajoe/LuaJITSharp/tree/main/Examples).
