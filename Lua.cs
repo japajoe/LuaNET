@@ -315,6 +315,11 @@ namespace LuaJITSharp
             LuaNative.lua_getfield(L, idx, k);
         }
 
+        public static LuaType GetFieldWithType(LuaState L, int idx, string k)
+        {
+            return (LuaType)LuaNative.lua_getfield_with_type(L, idx, k);
+        }        
+
         public static void RawGet(LuaState L, int idx)
         {
             LuaNative.lua_rawget(L, idx);
@@ -460,6 +465,11 @@ namespace LuaJITSharp
             return LuaNative.luaL_loadfilex(L, filename, mode);
         }
 
+        public static int LoadBufferEx(LuaState L, string buffer, ulong size, string name, string mode)
+        {
+            return LuaNative.luaL_loadbufferx(L, buffer, size, name, mode);
+        }
+
         public static int LoadString(LuaState L, string s)
         {
             return LuaNative.luaL_loadstring(L, s);
@@ -538,6 +548,21 @@ namespace LuaJITSharp
         public static int DoString(LuaState L, string s)
         {
             return LuaNative.luaL_dostring(L, s);
+        }
+
+        public static void RequireF(LuaState L, string modname, LuaFunction openf, int glb)
+        {
+            LuaNative.luaL_requiref(L, modname, openf, glb);
+        }
+
+        public static int GetSubTable(LuaState L, int i, string name)
+        {
+            return LuaNative.luaL_getsubtable(L, i, name);
+        }
+
+        public static int AbsIndex(LuaState L, int i)
+        {
+            return LuaNative.lua_absindex(L, i);
         }
     }
 }

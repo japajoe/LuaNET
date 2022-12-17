@@ -337,6 +337,12 @@ namespace LuaJITSharp
         [DllImport(LIBRARY_NAME, CallingConvention = Convention)]
         public static extern void lua_getfield(LuaState L, int idx, string k);
 
+        public static int lua_getfield_with_type(LuaState L, int idx, string k)
+        {
+            lua_getfield(L, idx, k);
+            return lua_type(L, -1);
+        }
+
         [DllImport(LIBRARY_NAME, CallingConvention = Convention)]
         public static extern void lua_rawget(LuaState L, int idx);
 
@@ -853,6 +859,63 @@ namespace LuaJITSharp
 
         [DllImport(LIBRARY_NAME, CallingConvention = Convention)]
         public static extern void luaL_pushresult(LuaLBuffer B);
+
+        /// <summary>
+        /// COMPAT53_API
+        /// </summary>
+        public static void luaL_requiref(LuaState L, string modname, LuaFunction openf, int glb)
+        {
+            luaL_checkstack(L, 3, "not enough stack slots available");
+            
+            luaL_getsubtable(L, LUA_REGISTRYINDEX, "_LOADED");
+            
+            if (lua_getfield_with_type(L, -1, modname) == LUA_TNIL) 
+            {
+                lua_pop(L, 1);
+                lua_pushcfunction(L, openf);
+                lua_pushstring(L, modname);
+                lua_call(L, 1, 1);
+                lua_pushvalue(L, -1);
+                lua_setfield(L, -3, modname);
+            }
+            if (glb > 0) 
+            {
+                lua_pushvalue(L, -1);
+                lua_setglobal(L, modname);
+            }
+            lua_replace(L, -2);
+        }
+
+        /// <summary>
+        /// COMPAT53_API
+        /// </summary>
+        public static int luaL_getsubtable (LuaState L, int i, string name) 
+        {
+            int abs_i = lua_absindex(L, i);
+            luaL_checkstack(L, 3, "not enough stack slots");
+            lua_pushstring(L, name);
+            lua_gettable(L, abs_i);
+            
+            if (lua_istable(L, -1))
+                return 1;
+            
+            lua_pop(L, 1);
+            lua_newtable(L);
+            lua_pushstring(L, name);
+            lua_pushvalue(L, -2);
+            lua_settable(L, abs_i);
+            return 0;
+        }        
+
+        /// <summary>
+        /// COMPAT53_API
+        /// </summary>
+        public static int lua_absindex (LuaState L, int i)
+        {
+            if (i < 0 && i > LUA_REGISTRYINDEX)
+                i += lua_gettop(L) + 1;
+            return i;
+        }
 
         [DllImport(LIBRARY_NAME, CallingConvention = Convention)]
         public static extern int luaopen_base(LuaState L);
