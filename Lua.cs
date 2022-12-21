@@ -29,7 +29,7 @@ namespace LuaJITSharp
             return LuaNative.luaL_newstate();
         }
 
-        public static LuaState NewState(LuaAlloc f, UIntPtr ud)
+        public static LuaState NewState(LuaAlloc f, IntPtr ud)
         {
             return LuaNative.lua_newstate(f, ud);
         }
@@ -245,7 +245,7 @@ namespace LuaJITSharp
             return LuaNative.lua_tocfunction(L, idx);
         }
 
-        public static UIntPtr ToUserData(LuaState L, int idx)
+        public static IntPtr ToUserData(LuaState L, int idx)
         {
             return LuaNative.lua_touserdata(L, idx);
         }
@@ -255,7 +255,7 @@ namespace LuaJITSharp
             return LuaNative.lua_tothread(L, idx);
         }
 
-        public static UIntPtr ToPointer(LuaState L, int idx)
+        public static IntPtr ToPointer(LuaState L, int idx)
         {
             return LuaNative.lua_topointer(L, idx);
         }
@@ -295,7 +295,7 @@ namespace LuaJITSharp
             LuaNative.lua_pushboolean(L, b ? 1 : 0);
         }
 
-        public static void PushLightUserData(LuaState L, UIntPtr p)
+        public static void PushLightUserData(LuaState L, IntPtr p)
         {
             LuaNative.lua_pushlightuserdata(L, p);
         }
@@ -335,7 +335,7 @@ namespace LuaJITSharp
             LuaNative.lua_createtable(L, narr, nrec);
         }
 
-        public static UIntPtr NewUserData(LuaState L, UInt64 sz)
+        public static IntPtr NewUserData(LuaState L, UInt64 sz)
         {
             return LuaNative.lua_newuserdata(L, sz);
         }
@@ -390,17 +390,17 @@ namespace LuaJITSharp
             return LuaNative.lua_pcall(L, nargs, nresults, errfunc);
         }
 
-        public static int CPCall(LuaState L, LuaFunction func, UIntPtr ud)
+        public static int CPCall(LuaState L, LuaFunction func, IntPtr ud)
         {
             return LuaNative.lua_cpcall(L, func, ud);
         }
 
-        public static int Load(LuaState L, LuaReader reader, UIntPtr dt, string chunkname)
+        public static int Load(LuaState L, LuaReader reader, IntPtr dt, string chunkname)
         {
             return LuaNative.lua_load(L, reader, dt, chunkname);
         }
 
-        public static int Dump(LuaState L, LuaWriter writer, UIntPtr data)
+        public static int Dump(LuaState L, LuaWriter writer, IntPtr data)
         {
             return LuaNative.lua_dump(L, writer, data);
         }
@@ -440,12 +440,12 @@ namespace LuaJITSharp
             LuaNative.lua_concat(L, n);
         }
 
-        public static LuaAlloc GetAllocF(LuaState L, ref UIntPtr ud)
+        public static LuaAlloc GetAllocF(LuaState L, ref IntPtr ud)
         {
             return LuaNative.lua_getallocf(L, ref ud);
         }
 
-        public static void SetAllocF(LuaState L, LuaAlloc f, UIntPtr ud)
+        public static void SetAllocF(LuaState L, LuaAlloc f, IntPtr ud)
         {
             LuaNative.lua_setallocf(L, f, ud);
         }

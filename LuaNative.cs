@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-using voidp = System.UIntPtr;
+using voidp = System.IntPtr;
 using charp = System.IntPtr;
 using size_t = System.UInt64;
 using lua_Number = System.Double;

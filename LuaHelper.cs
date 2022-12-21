@@ -9,6 +9,28 @@ namespace LuaJITSharp
             return LuaNative.lua_gettop(L);
         }
 
+        public static bool CheckArgumentCount(LuaState L, int argsMin, int argsMax, out int argsActual)
+        {
+            argsActual = GetArgumentCount(L);
+
+            if(argsActual < argsMin || argsActual > argsMax)
+            {
+                if(argsMin == argsMax)
+                {
+                    string message = "Expected " + argsMin + " argument(s) but got " + argsActual;
+                    Console.WriteLine(message);
+                }
+                else
+                {
+                    string message  = "Expected at least " + argsMin + " and maximum " + argsMax + " argument(s) but got " + argsActual;
+                    Console.WriteLine(message);
+                }
+                return false;
+            }
+
+            return true;
+        }        
+
         public static bool CheckTypes(LuaState L, params LuaType[] types)
         {
             int count = 0;
@@ -112,6 +134,71 @@ namespace LuaJITSharp
             LuaNative.lua_pop(L, 1);
             return value;
         }
+
+        public static void PushTable(LuaState L)
+        {
+            LuaNative.lua_newtable(L);
+        }
+
+        public static void PushTableField(LuaState L, string name, string value)
+        {
+            LuaNative.lua_pushstring(L, name);
+            LuaNative.lua_pushstring(L, value);
+            LuaNative.lua_settable(L, -3);
+        }
+
+        public static void PushTableField(LuaState L, string name, long value)
+        {
+            LuaNative.lua_pushstring(L, name);
+            LuaNative.lua_pushinteger(L, value);
+            LuaNative.lua_settable(L, -3);
+        }
+
+        public static void PushTableField(LuaState L, string name, double value)
+        {
+            LuaNative.lua_pushstring(L, name);
+            LuaNative.lua_pushnumber(L, value);
+            LuaNative.lua_settable(L, -3);
+        }
+
+        public static void PushTableField(LuaState L, string name, IntPtr value)
+        {
+            LuaNative.lua_pushstring(L, name);
+            LuaNative.lua_pushlightuserdata(L, value);
+            LuaNative.lua_settable(L, -3);
+        }
+
+        public static void PopTableField(LuaState L, string name, out string value)
+        {
+            LuaNative.lua_pushstring(L, name);
+            LuaNative.lua_gettable(L, -2);
+            value = LuaNative.lua_tostring(L, -1);
+            LuaNative.lua_pop(L, 1);
+        }
+
+        public static void PopTableField(LuaState L, string name, out long value)
+        {
+            LuaNative.lua_pushstring(L, name);
+            LuaNative.lua_gettable(L, -2);
+            value = LuaNative.lua_tointeger(L, -1);
+            LuaNative.lua_pop(L, 1);
+        }
+
+        public static void PopTableField(LuaState L, string name, out double value)
+        {
+            LuaNative.lua_pushstring(L, name);
+            LuaNative.lua_gettable(L, -2);
+            value = LuaNative.lua_tonumber(L, -1);
+            LuaNative.lua_pop(L, 1);
+        }
+
+        public static void PopTableField(LuaState L, string name, out IntPtr value)
+        {
+            LuaNative.lua_pushstring(L, name);
+            LuaNative.lua_gettable(L, -2);
+            value = LuaNative.lua_touserdata(L, -1);
+            LuaNative.lua_pop(L, 1);
+        }        
 
         public static bool TryPopUInt8(LuaState L, out byte value)
         {
