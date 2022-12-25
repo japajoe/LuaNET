@@ -15,17 +15,18 @@ namespace LuaJITSharp
     public delegate voidp LuaAlloc(voidp ud, voidp ptr, size_t osize, size_t nsize);
     public delegate void LuaHook(LuaState L, LuaDebug ar);
     public delegate T LuaLFunction<T>(LuaState L, int n);
+    public delegate void LuaJITProfileCallback(voidp data, LuaState L, int samples, int vmstate);
 
     [StructLayout(LayoutKind.Sequential)]
     public struct LuaState
     {
-        public UIntPtr pointer;
+        public IntPtr pointer;
 
         public bool IsValid
         {
             get
             {
-                return pointer != UIntPtr.Zero;
+                return pointer != IntPtr.Zero;
             }
         }
     }
@@ -173,12 +174,10 @@ namespace LuaJITSharp
         public const int LUA_MASKCOUNT = (1 << LUA_HOOKCOUNT);
 
         public const int LUA_NOREF = -2;
-        public const int LUA_REFNIL = -1;        
-
-        public delegate void luaJIT_profile_callback(voidp data, LuaState L, int samples, int vmstate);
+        public const int LUA_REFNIL = -1;
 
         [DllImport(LIBRARY_NAME, CallingConvention = Convention)]
-        public static extern void luaJIT_profile_start(LuaState L, string mode, luaJIT_profile_callback cb, voidp data);
+        public static extern void luaJIT_profile_start(LuaState L, string mode, LuaJITProfileCallback cb, voidp data);
 
         [DllImport(LIBRARY_NAME, CallingConvention = Convention)]
         public static extern void luaJIT_profile_stop(LuaState L);

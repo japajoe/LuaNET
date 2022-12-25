@@ -19,10 +19,55 @@ namespace LuaJITSharp
 
     public static class Lua
     {
+        public static void ProfileStart(LuaState L, string mode, LuaJITProfileCallback cb, IntPtr data)
+        {
+            LuaNative.luaJIT_profile_start(L, mode, cb, data);
+        }
+
+        public static void ProfileStop(LuaState L)
+        {
+            LuaNative.luaJIT_profile_stop(L);
+        }
+
+        public static string ProfileDumpStack(LuaState L, string fmt, int depth, ref ulong len)
+        {
+            return LuaNative.luaJIT_profile_dumpstack_(L, fmt, depth, ref len);
+        }
+
+        public static string QL(string x)
+        {
+            return LuaNative.LUA_QL(x);
+        }        
+
+        public static int UpValueIndex(int i)
+        {
+            return LuaNative.lua_upvalueindex(i);
+        }        
+
         public static double Version(LuaState L)
         {
             return LuaNative.lua_version_(L);
         }
+
+        public static void Copy(LuaState L, int fromidx, int toidx)
+        {
+            LuaNative.lua_copy(L, fromidx, toidx);
+        }
+
+        public static double ToNumberX(LuaState L, int idx, ref int isnum) 
+        {
+            return LuaNative.lua_tonumberx(L, idx, ref isnum);
+        }
+
+        public static long ToIntegerX(LuaState L, int idx, ref int isnum)
+        {
+            return LuaNative.lua_tointegerx(L, idx, ref isnum);
+        }
+
+        public static bool IsYieldable(LuaState L)
+        {
+            return LuaNative.lua_isyieldable(L) > 0;
+        }        
 
         public static LuaState NewState()
         {
@@ -34,10 +79,30 @@ namespace LuaJITSharp
             return LuaNative.lua_newstate(f, ud);
         }
 
+        public static LuaState Open()
+        {
+            return LuaNative.lua_open();
+        }
+
+        public static void GetRegistry(LuaState L)
+        {
+            LuaNative.lua_getregistry(L);
+        }
+
+        public static int GetGCCount(LuaState L)
+        {
+            return LuaNative.lua_getgccount(L);
+        }
+
         public static void Close(LuaState L)
         {
             LuaNative.lua_close(L);
-        }        
+        }
+
+        public static void OpenLib(LuaState L, string libname, LuaLReg l, int nup)
+        {
+            LuaNative.luaL_openlib(L, libname, l, nup);
+        }
 
         public static void OpenLibs(LuaState L)
         {
@@ -121,6 +186,11 @@ namespace LuaJITSharp
             return LuaNative.lua_newthread(L);
         }
 
+        public static LuaFunction AtPanic(LuaState L, LuaFunction panicf)
+        {
+            return LuaNative.lua_atpanic(L, panicf);
+        }
+
         public static int GetTop(LuaState L)
         {
             return LuaNative.lua_gettop(L);
@@ -130,6 +200,76 @@ namespace LuaJITSharp
         {
             LuaNative.lua_settop(L, idx);
         }
+
+        public static void SetLevel(LuaState from, LuaState to)
+        {
+            LuaNative.lua_setlevel(from, to);
+        }
+
+        public static int GetStack(LuaState L, int level, LuaDebug ar)
+        {
+            return LuaNative.lua_getstack(L, level, ar);
+        }
+
+        public static int GetInfo(LuaState L, string what, LuaDebug ar)
+        {
+            return LuaNative.lua_getinfo(L, what, ar);
+        }
+
+        public static string GetLocal(LuaState L, LuaDebug ar, int n)
+        {
+            return LuaNative.lua_getlocal_(L, ar, n);
+        }
+
+        public static string SetLocal(LuaState L, LuaDebug ar, int n)
+        {
+            return LuaNative.lua_setlocal_(L, ar, n);
+        }
+
+        public static string GetUpValue(LuaState L, int funcindex, int n)
+        {
+            return LuaNative.lua_getupvalue_(L, funcindex, n);
+        }
+
+        public static string SetUpValue(LuaState L, int funcindex, int n)
+        {
+            return LuaNative.lua_setupvalue_(L, funcindex, n);
+        }
+
+        public static int SetHook(LuaState L, LuaHook func, int mask, int count)
+        {
+            return LuaNative.lua_sethook(L, func, mask, count);
+        }
+
+        public static LuaHook GetHook(LuaState L)
+        {
+            return LuaNative.lua_gethook(L);
+        }
+
+        public static int GetHookMask(LuaState L)
+        {
+            return LuaNative.lua_gethookmask(L);
+        }
+
+        public static int GetHookAccount(LuaState L)
+        {
+            return LuaNative.lua_gethookcount(L);
+        }
+
+        public static IntPtr UpValueId(LuaState L, int idx, int n)
+        {
+            return LuaNative.lua_upvalueid(L, idx, n);
+        }
+
+        public static void UpValueJoin(LuaState L, int idx1, int n1, int idx2, int n2)
+        {
+            LuaNative.lua_upvaluejoin(L, idx1, n1, idx2, n2);
+        }
+
+        public static int LuadX(LuaState L, LuaReader reader, IntPtr dt, string chunkname, string mode)
+        {
+            return LuaNative.lua_loadx(L, reader, dt, chunkname, mode);
+        }        
 
         public static void PushValue(LuaState L, int idx)
         {
@@ -155,6 +295,31 @@ namespace LuaJITSharp
         {
             return LuaNative.lua_checkstack(L, sz);
         }
+
+        public static void CheckType(LuaState L, int narg, int t)
+        {
+            LuaNative.luaL_checktype(L, narg, t);
+        }
+
+        public static void CheckAny(LuaState L, int narg)
+        {
+            LuaNative.luaL_checkany(L, narg);
+        }
+
+        public static int NewMetaTable(LuaState L, string tname)
+        {
+            return LuaNative.luaL_newmetatable(L, tname);
+        }
+
+        public static IntPtr CheckUData(LuaState L, int ud, string tname)
+        {
+            return LuaNative.luaL_checkudata(L, ud, tname);
+        }
+
+        public static void Where(LuaState L, int lvl)
+        {
+            LuaNative.luaL_where(L, lvl);
+        }        
 
         public static void XMove(LuaState from, LuaState to, int n)
         {
@@ -345,6 +510,11 @@ namespace LuaJITSharp
             return LuaNative.lua_getmetatable(L, objindex);
         }
 
+        public static void GetMetaTable(LuaState L, string n)
+        {
+            LuaNative.luaL_getmetatable(L, n);
+        }        
+
         public static void GetFEnv(LuaState L, int idx)
         {
             LuaNative.lua_getfenv(L, idx);
@@ -374,6 +544,41 @@ namespace LuaJITSharp
         {
             return LuaNative.lua_setmetatable(L, objindex);
         }
+
+        public static void ArgCheck(LuaState L, bool cond, int numarg, string extramsg)
+        {
+            LuaNative.luaL_argcheck(L, cond, numarg, extramsg);
+        }
+
+        public static string CheckString(LuaState L, int n)
+        {
+            return LuaNative.luaL_checkstring(L, n);
+        }
+
+        public static string OptString(LuaState L, int n, string d)
+        {
+            return LuaNative.luaL_optstring(L, n, d);
+        }
+
+        public static int CheckInt(LuaState L, int n)
+        {
+            return LuaNative.luaL_checkint(L, n);
+        }
+
+        public static int OptInt(LuaState L, int n, long d)
+        {
+            return LuaNative.luaL_optint(L, n, d);
+        }
+
+        public static long CheckLong(LuaState L, int n)
+        {
+            return LuaNative.luaL_checklong(L, n);
+        }
+
+        public static long OptLong(LuaState L, int n, long d)
+        {
+            return LuaNative.luaL_optlong(L, n, d);
+        }      
 
         public static int SetFEnv(LuaState L, int idx)
         {
@@ -430,6 +635,71 @@ namespace LuaJITSharp
             return LuaNative.lua_error(L);
         }
 
+        public static int CheckOption(LuaState L, int narg, string def, string[][] lst)
+        {
+            return LuaNative.luaL_checkoption(L, narg, def, lst);
+        }
+
+        public static int Ref(LuaState L, int t)
+        {
+            return LuaNative.luaL_ref(L, t);
+        }
+
+        public static void UnRef(LuaState L, int t, int _ref)
+        {
+            LuaNative.luaL_unref(L, t, _ref);
+        }
+
+        public static string GSub(LuaState L, string s, string p, string r)
+        {
+            return LuaNative.luaL_gsub_(L, s, p, r);
+        }
+
+        public static string FindTable(LuaState L, int idx, string fname, int szhint)
+        {
+            return LuaNative.luaL_findtable_(L, idx, fname, szhint);
+        }
+
+        public static int FileResult(LuaState L, int stat, string fname)
+        {
+            return LuaNative.luaL_fileresult(L, stat, fname);
+        }
+
+        public static int ExecResult(LuaState L, int stat)
+        {
+            return LuaNative.luaL_execresult(L, stat);
+        }
+
+        public static void TraceBack(LuaState L, LuaState L1, string msg, int level)
+        {
+            LuaNative.luaL_traceback(L, L1, msg, level);
+        }
+
+        public static void SetFuncs(LuaState L, LuaLReg[] l, int nup)
+        {
+            LuaNative.luaL_setfuncs(L, l, nup);
+        }
+
+        public static void PushModule(LuaState L, string modename, int sizehint)
+        {
+            LuaNative.luaL_pushmodule(L, modename, sizehint);
+        }
+
+        public static IntPtr TestUData(LuaState L, int ud, string tname)
+        {
+            return LuaNative.luaL_testudata(L, ud, tname);
+        }
+
+        public static void SetMetaTable(LuaState L, string tname)
+        {
+            LuaNative.luaL_setmetatable(L, tname);
+        }        
+
+        public static int LoadBuffer(LuaState L, string buff, ulong sz, string name)
+        {
+            return LuaNative.luaL_loadbuffer(L, buff, sz, name);
+        }
+
         public static int Next(LuaState L, int idx)
         {
             return LuaNative.lua_next(L, idx);
@@ -475,10 +745,65 @@ namespace LuaJITSharp
             return LuaNative.luaL_loadstring(L, s);
         }
 
+        public static void Register(LuaState L, string libname, LuaLReg l)
+        {
+            LuaNative.luaL_register(L, libname, l);
+        }
+
         public static void Register(LuaState L, string n, LuaFunction f)
         {
             LuaNative.lua_register(L, n, f);
         }
+
+        public static int GetMetaField(LuaState L, int obj, string e)
+        {
+            return LuaNative.luaL_getmetafield(L, obj, e);
+        }
+
+        public static int CallMeta(LuaState L, int obj, string e)
+        {
+            return LuaNative.luaL_callmeta(L, obj, e);
+        }
+
+        public static int TypeError(LuaState L, int narg, string tname)
+        {
+            return LuaNative.luaL_typerror(L, narg, tname);
+        }
+
+        public static int ArgError(LuaState L, int numarg, string extramsg)
+        {
+            return LuaNative.luaL_argerror(L, numarg, extramsg);
+        }
+
+        public static string CheckLString(LuaState L, int numArg, ref ulong l)
+        {
+            return LuaNative.luaL_checklstring_(L, numArg, ref l);
+        }
+
+        public static string OptLString(LuaState L, int numArg, string def, ref ulong l)
+        {
+            return LuaNative.luaL_optlstring_(L, numArg, def, ref l);
+        }
+
+        public static double CheckNumber(LuaState L, int numArg)
+        {
+            return LuaNative.luaL_checknumber(L, numArg);
+        }
+
+        public static double OptNumber(LuaState L, int nArg, double def)
+        {
+            return LuaNative.luaL_optnumber(L, nArg, def);
+        }
+
+        public static long CheckInteger(LuaState L, int numArg)
+        {
+            return LuaNative.luaL_checkinteger(L, numArg);
+        }
+
+        public static long OptInteger(LuaState L, int nArg, long def)
+        {
+            return LuaNative.luaL_optinteger(L, nArg, def);
+        }        
 
         public static void Pop(LuaState L, int n)
         {
@@ -494,6 +819,11 @@ namespace LuaJITSharp
         {
             LuaNative.lua_pushcfunction(L, f);
         }
+
+        public static ulong StrLen(LuaState L, int i)
+        {
+            return LuaNative.lua_strlen(L, i);
+        }        
 
         public static bool IsFunction(LuaState L, int n)
         {
@@ -534,6 +864,11 @@ namespace LuaJITSharp
         {
             return LuaNative.lua_isnoneornil(L, n);
         }
+
+        public static void PushLiteral(LuaState L, string s)
+        {
+            LuaNative.lua_pushliteral(L, s);
+        }        
 
         public static int LoadFile(LuaState L, string filename)
         {
