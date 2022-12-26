@@ -680,13 +680,11 @@ namespace LuaJITSharp
         [DllImport(LIBRARY_NAME, CallingConvention = Convention)]
         public static extern void luaL_where(LuaState L, int lvl);
 
-        // TODO: I dont think params works
         [DllImport(LIBRARY_NAME, CallingConvention = Convention)]
-        public static extern int luaL_error(LuaState L, string fmt, params string[] args);
+        public static extern int luaL_error(LuaState L, string fmt, string args);
 
-        // TODO: I dont think string[][] works
         [DllImport(LIBRARY_NAME, CallingConvention = Convention)]
-        public static extern int luaL_checkoption(LuaState L, int narg, string def, string[][] lst);
+        public static extern int luaL_checkoption(LuaState L, int narg, string def, string[] lst);
 
         [DllImport(LIBRARY_NAME, CallingConvention = Convention)]
         public static extern int luaL_ref(LuaState L, int t);

@@ -175,7 +175,7 @@ namespace LuaJITSharp
         /// <param name="def"></param>
         /// <param name="lst"></param>
         /// <returns></returns>
-        public static int CheckOption(LuaState L, int narg, string def, string[][] lst)
+        public static int CheckOption(LuaState L, int narg, string def, string[] lst)
         {
             return LuaNative.luaL_checkoption(L, narg, def, lst);
         }
@@ -341,7 +341,7 @@ namespace LuaJITSharp
         /// <param name="fmt"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static int Error(LuaState L, string fmt, params string[] args)
+        public static int Error(LuaState L, string fmt, string args)
         {
             return LuaNative.luaL_error(L, fmt, args);
         }
