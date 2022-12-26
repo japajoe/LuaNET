@@ -501,6 +501,12 @@ namespace LuaJITSharp
             lua_getfield(L, LUA_GLOBALSINDEX, s);
         }
 
+        public static int lua_getglobal_with_type(LuaState L, string s)
+        {
+            lua_getfield(L, LUA_GLOBALSINDEX, s);
+            return lua_type(L, -1);
+        }        
+
         public static string lua_tostring(LuaState L, int i)
         {
             ulong len = 0;
