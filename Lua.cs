@@ -26,7 +26,7 @@ namespace LuaJITSharp
         CountB = 4,
         Step = 5,
         SetPause = 6,
-        SetSetupMul = 7,
+        SetStepMul = 7,
         IsRunning = 9,
     }
 
