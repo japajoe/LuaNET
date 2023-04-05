@@ -50,7 +50,7 @@ namespace LuaJITSharp
 
         public static bool RegisterFromFile(LuaState L, string name, string filepath)
         {
-            if(System.IO.File.Exists(filepath))
+            if(!System.IO.File.Exists(filepath))
             {
                 Console.WriteLine("Could not register module because the file was not found: " + filepath);
                 return false;
