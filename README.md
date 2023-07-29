@@ -17,7 +17,7 @@ namespace LuaNETExample
 
             LuaState state = Lua.NewState();            
 
-            if (state.IsValid)
+            if (!state.IsNull)
             {
                 Lua.OpenLibs(state);
                 Lua.DoString(state, code);
