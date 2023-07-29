@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LuaJITSharp
+namespace LuaNET
 {
     public enum LuaType
     {

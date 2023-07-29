@@ -1,7 +1,7 @@
 using System.Net.Http;
-using LuaJITSharp;
+using LuaNET;
 
-namespace LuaJITExample
+namespace LuaNETExample
 {
     public static class HttpClientModule
     {

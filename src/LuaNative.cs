@@ -7,7 +7,7 @@ using size_t = System.UInt64;
 using lua_Number = System.Double;
 using lua_Integer = System.Int64;
 
-namespace LuaJITSharp
+namespace LuaNET
 {
     public delegate int LuaFunction(LuaState L);
     public delegate charp LuaReader(LuaState L, voidp ud, ref size_t sz);
@@ -22,11 +22,11 @@ namespace LuaJITSharp
     {
         public IntPtr pointer;
 
-        public bool IsValid
+        public bool IsNull
         {
             get
             {
-                return pointer != IntPtr.Zero;
+                return pointer == IntPtr.Zero;
             }
         }
     }

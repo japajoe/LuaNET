@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace LuaJITSharp
+namespace LuaNET.Modules
 {
     public static class LuaModuleLoader
     {

@@ -1,13 +1,13 @@
-# LuaJITSharp
+# LuaNET
 This is a modified fork of https://github.com/tilkinsc/Lua.NET but only with support for LuaJIT. For interaction with LuaJIT you use the Lua class rather than calling the native functions directly.
 
 # Example
 ```csharp
 using System;
 using System.IO;
-using LuaJITSharp;
+using LuaNET;
 
-namespace LuaJITExample
+namespace LuaNETExample
 {
     class Program
     {

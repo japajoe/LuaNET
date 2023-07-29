@@ -1,8 +1,8 @@
 using System;
 using System.IO;
-using LuaJITSharp;
+using LuaNET;
 
-namespace LuaJITExample
+namespace LuaNETExample
 {
     class Program
     {
