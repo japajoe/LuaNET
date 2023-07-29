@@ -1,5 +1,5 @@
 # LuaNET
-This is a modified fork of https://github.com/tilkinsc/Lua.NET but only with support for LuaJIT. For interaction with LuaJIT you use the Lua class rather than calling the native functions directly.
+A modified fork of https://github.com/tilkinsc/Lua.NET but only with support for LuaJIT. This library uses a more C-Sharp styled API, with built-in functionality to load modules and call C-Sharp methods directly by function pointer.
 
 # Example
 ```csharp

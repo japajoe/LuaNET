@@ -12,7 +12,7 @@ namespace LuaNETExample
         {
             addNumbers = AddNumbers;
 
-            string filepath = "CallingCFunctionFromLua.lua";
+            string filepath = "CallingCLibFunctionFromLua.lua";
 
             if(!File.Exists(filepath))
             {
