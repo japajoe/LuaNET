@@ -22,7 +22,7 @@ namespace LuaNETExample
 
             LuaState state = Lua.NewState();            
 
-            if (state.IsValid)
+            if (!state.IsNull)
             {
                 Lua.Register(state, "AddNumbers", addNumbers);
                 Lua.OpenLibs(state);
