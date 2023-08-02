@@ -100,8 +100,8 @@ namespace LuaNETExample
             {
                 Lua.OpenLibs(state);
 
-                //Very important to initialize modules before running any code that tries to use it
-                //LuaNetModule is required by TestModule so it needs to be loaded first
+                //LuaNetModule is used to find C# methods and TestModule requires it
+                //Loading order of modules is important in this case
                 luanetModule.Initialize(state);
                 testModule.Initialize(state);
 
