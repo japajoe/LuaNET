@@ -91,6 +91,7 @@ namespace LuaNETExample
     {
         static void Main(string[] args)
         {
+            LuaNETModule luanetModule = new LuaNETModule();
             TestModule testModule = new TestModule();
 
             LuaState state = Lua.NewState();            
@@ -99,7 +100,9 @@ namespace LuaNETExample
             {
                 Lua.OpenLibs(state);
 
-                //Very important to initialize the module before running any code that tries to use it
+                //Very important to initialize modules before running any code that tries to use it
+                //LuaNetModule is required by TestModule so it needs to be loaded first
+                luanetModule.Initialize(state);
                 testModule.Initialize(state);
 
                 //Note that this file path assumes that example.lua is in the same directory as the executable
