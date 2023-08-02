@@ -46,8 +46,8 @@ local luanet = require('luanet')
 
 --You can name this variable however you like
 local csharp = {}
-csharp.writeLine = luanet.findMethod('WriteLine', 'void (__cdecl*)(char*)')
-csharp.addNumbers = luanet.findMethod('AddNumbers', 'int (__cdecl*)(int,int)')
+csharp.WriteLine = luanet.findMethod('WriteLine', 'void (__cdecl*)(char*)')
+csharp.AddNumbers = luanet.findMethod('AddNumbers', 'int (__cdecl*)(int,int)')
 
 local test = {}
 
@@ -65,13 +65,13 @@ function test.writeLine(message)
     ffi.copy(c_message, message)
 
     --Call the C# method
-    csharp.writeLine(c_message)
+    csharp.WriteLine(c_message)
 end
 
 function test.addNumbers(a, b)
     local c_a = ffi.cast('int', a)
     local c_b = ffi.cast('int', b)
-    local result = csharp.addNumbers(c_a, c_b)
+    local result = csharp.AddNumbers(c_a, c_b)
     return tonumber(result)
 end
 
