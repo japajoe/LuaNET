@@ -1,6 +1,12 @@
 # LuaNET
 A modified fork of https://github.com/tilkinsc/Lua.NET but only with support for LuaJIT. This library uses a more C-Sharp styled API, with built-in functionality to load modules and call C-Sharp methods directly by function pointer.
 
+# Installation
+The easiest way to install is with NuGet
+```
+dotnet add package JAJ.Packages.LuaNET --version 1.0.0
+```
+
 # Basic Example
 The basic example just prints 'Hello world' to the console.
 ```csharp
