@@ -3,6 +3,20 @@
   <PropertyGroup>
     <TargetFrameworks>net7.0;netstandard2.0;netstandard2.1</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PackageId>JAJ.Packages.LuaNET</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>W.M.R Jap-A-Joe</Authors>
+    <PackageTags>Lua LuaJIT</PackageTags>
+    <Description>
+      A wrapper for Lua with support for LuaJIT. This library has built-in functionality to load modules and call C-Sharp methods directly by function pointer.
+    </Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/japajoe/LuaNET</PackageProjectUrl> 
+    <RepositoryUrl>https://github.com/japajoe/LuaNET.git</RepositoryUrl> 
+    <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <Copyright>Copyright $([System.DateTime]::Now.Year) W.M.R Jap-A-Joe</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,6 +24,11 @@
     <Compile Remove="**/Examples/**" />
     <EmbeddedResource Remove="**/Examples/**" />
     <None Remove="**/Examples/**" />
+    <None Include="README.md" Pack="true" PackagePath="/"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="runtimes\**" PackagePath="runtimes" Visible="false" />
   </ItemGroup>
 
 </Project>
