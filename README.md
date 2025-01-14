@@ -4,8 +4,11 @@ A modified fork of https://github.com/tilkinsc/Lua.NET but only with support for
 # Installation
 The easiest way to install is with NuGet
 ```
-dotnet add package JAJ.Packages.LuaNET --version 1.0.0
+dotnet add package JAJ.Packages.LuaNET --version 1.1.0
 ```
+
+# Changes in 1.1.0
+- Add support for OSX ARM64.
 
 # Basic Example
 The basic example just prints 'Hello world' to the console.
